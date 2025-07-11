@@ -3,79 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grilyato Tanlash</title>
+  <title>Grilyato Tanlash - ASTech</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
-      background: #f9fafc;
+      font-family: "Segoe UI", sans-serif;
+      background: #f2f4f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: white;
       padding: 20px;
-      max-width: 600px;
-      margin: auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
     }
+
+    header img {
+      height: 50px;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 0 20px 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
     h2 {
-      margin-top: 40px;
+      padding-top: 30px;
+      font-size: 18px;
+      color: #222;
     }
+
     .grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 15px;
+      margin-top: 15px;
     }
+
     .card {
-      border: 2px solid #ccc;
+      background: #fdfdfd;
+      border: 2px solid #ddd;
       border-radius: 10px;
-      padding: 10px;
       width: 130px;
       text-align: center;
-      background: white;
+      padding: 10px;
       cursor: pointer;
       transition: 0.2s;
     }
+
     .card:hover {
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
       transform: scale(1.03);
     }
+
     .card.selected {
       border-color: #007bff;
-      background: #e0f0ff;
+      background-color: #e9f4ff;
     }
+
     .card img {
-      max-width: 100%;
       height: 80px;
       object-fit: contain;
+      margin-bottom: 5px;
     }
+
     input[type="number"] {
       width: 100%;
-      padding: 10px;
-      font-size: 18px;
-      margin-top: 10px;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 15px;
       border: 2px solid #ccc;
       border-radius: 8px;
     }
+
     .result {
-      font-size: 20px;
       margin-top: 20px;
+      font-size: 18px;
       font-weight: bold;
-      color: #333;
+      color: #1a1a1a;
     }
+
     .hidden {
       display: none;
+    }
+
+    footer {
+      background: #f8f8f8;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <h2>1️⃣ Grilyato turini tanlang</h2>
-  <div class="grid" id="typeList"></div>
+  <header>
+    <img src="https://astech.uz/thumb/2/xVW_N4JX4i-B8pU_6aysfw/153c/d/logo_05_01_c.png" alt="ASTech logotipi">
+  </header>
 
-  <div id="colorSection" class="hidden">
-    <h2>2️⃣ Rang tanlang</h2>
-    <div class="grid" id="colorList"></div>
-  </div>
+  <main>
+    <h2>1️⃣ Grilyato turini tanlang</h2>
+    <div class="grid" id="typeList"></div>
 
-  <div id="calcSection" class="hidden">
-    <h2>3️⃣ Maydonni kiriting (m²)</h2>
-    <input type="number" id="areaInput" placeholder="Masalan: 12" min="1" />
-    <div class="result" id="totalResult">Jami narx: -</div>
-  </div>
+    <div id="colorSection" class="hidden">
+      <h2>2️⃣ Rang tanlang</h2>
+      <div class="grid" id="colorList"></div>
+    </div>
+
+    <div id="calcSection" class="hidden">
+      <h2>3️⃣ Maydonni kiriting (m²)</h2>
+      <input type="number" id="areaInput" placeholder="m²" min="1" />
+      <div class="result" id="totalResult">Jami narx: -</div>
+    </div>
+  </main>
+
+  <footer>
+    📞 <a href="tel:+998936024242">+998 93 602 42 42</a>
+  </footer>
 
   <script>
     const types = [
@@ -146,8 +214,8 @@
     }
 
     areaInput.addEventListener("input", updateTotal);
-
     renderOptions(types, typeList, "type");
   </script>
+
 </body>
 </html>
