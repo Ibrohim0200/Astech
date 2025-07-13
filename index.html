@@ -3,46 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grilyato Tanlash - ASTech</title>
+  <title>Grilyato Tanlash - Astech</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f2f4f8;
-      color: #333;
-      margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
     }
 
     header {
-      background: white;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
-    header img {
-      height: 50px;
-    }
-
-    main {
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 0 20px 30px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    header h1 {
+      font-size: 28px;
+      color: #007bff;
+      margin: 0;
     }
 
     h2 {
-      padding-top: 30px;
-      font-size: 18px;
+      margin-top: 40px;
       color: #222;
     }
 
@@ -50,99 +33,141 @@
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
-      margin-top: 15px;
+      justify-content: center;
     }
 
     .card {
-      background: #fdfdfd;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      width: 130px;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 12px;
+      width: 150px;
       text-align: center;
-      padding: 10px;
+      background: white;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     .card:hover {
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      transform: scale(1.03);
+      transform: scale(1.04);
+      border-color: #007bff;
     }
 
     .card.selected {
       border-color: #007bff;
-      background-color: #e9f4ff;
+      background: #e8f2ff;
     }
 
     .card img {
+      max-width: 100%;
       height: 80px;
       object-fit: contain;
       margin-bottom: 5px;
     }
 
-    input[type="number"] {
+    .card div.name {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .card div.price {
+      font-size: 14px;
+      color: #555;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="tel"] {
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      margin-top: 15px;
+      margin-top: 10px;
       border: 2px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
     }
 
     .result {
+      font-size: 20px;
       margin-top: 20px;
-      font-size: 18px;
       font-weight: bold;
-      color: #1a1a1a;
+      color: #007bff;
     }
 
     .hidden {
       display: none;
     }
 
-    footer {
-      background: #f8f8f8;
-      padding: 15px;
+    #thankYouMessage {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #d4edda;
+      color: #155724;
+      border-radius: 10px;
+      font-weight: bold;
       text-align: center;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      color: #666;
       font-size: 14px;
-      color: #555;
-      margin-top: 40px;
-    }
-
-    footer a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="https://astech.uz/thumb/2/xVW_N4JX4i-B8pU_6aysfw/153c/d/logo_05_01_c.png" alt="ASTech logotipi">
+    <h1>Astech Grilyato Tanlash</h1>
   </header>
 
-  <main>
-    <h2>1️⃣ Grilyato turini tanlang</h2>
-    <div class="grid" id="typeList"></div>
+  <h2>1️⃣ Grilyato turini tanlang</h2>
+  <div class="grid" id="typeList"></div>
 
-    <div id="colorSection" class="hidden">
-      <h2>2️⃣ Rang tanlang</h2>
-      <div class="grid" id="colorList"></div>
-    </div>
+  <div id="colorSection" class="hidden">
+    <h2>2️⃣ Rang tanlang</h2>
+    <div class="grid" id="colorList"></div>
+  </div>
 
-    <div id="calcSection" class="hidden">
-      <h2>3️⃣ Maydonni kiriting (m²)</h2>
-      <input type="number" id="areaInput" placeholder="m²" min="1" />
-      <div class="result" id="totalResult">Jami narx: -</div>
-    </div>
-  </main>
+  <div id="calcSection" class="hidden">
+    <h2>3️⃣ Maydonni kiriting (m²)</h2>
+    <input type="number" id="areaInput" placeholder="Masalan: 12" min="1" />
+    <div class="result" id="totalResult">Jami narx: -</div>
+  </div>
+
+  <div id="orderSection" class="hidden">
+    <h2>4️⃣ Ma’lumotlaringiz</h2>
+    <input type="text" id="nameInput" placeholder="Ismingiz">
+    <input type="tel" id="phoneInput" placeholder="Telefon raqamingiz">
+    <button onclick="getLocation()">📍 Geolokatsiyani yuborish</button>
+    <p id="locationText"></p>
+    <button onclick="sendOrder()">✅ Buyurtma berish</button>
+  </div>
+
+  <div id="thankYouMessage" class="hidden">
+    Buyurtmangiz uchun raxmat! Siz bilan hodimlarimiz yaqin vaqt ichida bog'lanishadi.
+  </div>
 
   <footer>
-    📞 <a href="tel:+998936024242">+998 93 602 42 42</a>
+    📞 Aloqa markazi: +998 90 123 45 67 <br />
+    &copy; Astech, 2025
   </footer>
 
   <script>
@@ -163,6 +188,7 @@
 
     let selectedType = null;
     let selectedColor = null;
+    let userLocation = null;
 
     const typeList = document.getElementById("typeList");
     const colorList = document.getElementById("colorList");
@@ -174,7 +200,11 @@
       data.forEach(item => {
         const card = document.createElement("div");
         card.className = "card";
-        card.innerHTML = `<img src="${item.img}" /><div>${item.name}</div>`;
+        card.innerHTML = `
+          <img src="${item.img}" />
+          <div class="name">${item.name}</div>
+          <div class="price">${item.price ? item.price.toLocaleString() + ' so‘m/m²' : ''}</div>
+        `;
         card.addEventListener("click", () => {
           Array.from(container.children).forEach(child => child.classList.remove("selected"));
           card.classList.add("selected");
@@ -184,12 +214,15 @@
             selectedColor = null;
             document.getElementById("colorSection").classList.remove("hidden");
             document.getElementById("calcSection").classList.add("hidden");
+            document.getElementById("orderSection").classList.add("hidden");
+            document.getElementById("thankYouMessage").classList.add("hidden");
             renderOptions(colors, colorList, "color");
           }
 
           if (stateKey === "color") {
             selectedColor = item;
             document.getElementById("calcSection").classList.remove("hidden");
+            document.getElementById("orderSection").classList.remove("hidden");
             updateTotal();
           }
         });
@@ -213,9 +246,76 @@
       totalResult.textContent = `🧾 ${selectedType.name} (${selectedColor.name}) — ${total.toLocaleString()} so‘m`;
     }
 
+    function getLocation() {
+      const name = document.getElementById("nameInput").value.trim();
+      const phone = document.getElementById("phoneInput").value.trim();
+
+      if (!name || !phone) {
+        alert("Iltimos, ismingiz va telefon raqamingizni kiriting.");
+        return;
+      }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          userLocation = position.coords;
+          document.getElementById("locationText").textContent =
+            `📍 Koordinatalar: ${userLocation.latitude.toFixed(5)}, ${userLocation.longitude.toFixed(5)}`;
+        }, function() {
+          alert("Geolokatsiyaga ruxsat berilmadi.");
+        });
+      } else {
+        alert("Brauzeringiz geolokatsiyani qo‘llamaydi.");
+      }
+    }
+
+    function sendOrder() {
+      const name = document.getElementById("nameInput").value.trim();
+      const phone = document.getElementById("phoneInput").value.trim();
+      const area = parseFloat(areaInput.value);
+
+      if (!selectedType || !selectedColor || !area || !userLocation || !name || !phone) {
+        alert("Iltimos, barcha maydonlarni to‘ldiring va lokatsiyani yuboring.");
+        return;
+      }
+
+      const total = selectedType.price * area;
+
+      const message = `
+📦 Yangi buyurtma!
+👤 Ism: ${name}
+📞 Telefon: ${phone}
+🧱 Tur: ${selectedType.name}
+🎨 Rang: ${selectedColor.name}
+📐 Maydon: ${area} m²
+💰 Jami: ${total.toLocaleString()} so‘m
+📍 Lokatsiya: https://www.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}
+      `.trim();
+
+      fetch('https://api.telegram.org/bot7789052663:AAF4aWbPspPGy1abAnqkj59Icyw_w-6Dooc/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: "-1002885421730",
+          text: message
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          document.getElementById("thankYouMessage").classList.remove("hidden");
+          document.getElementById("thankYouMessage").scrollIntoView({ behavior: 'smooth' });
+          document.getElementById("nameInput").value = "";
+          document.getElementById("phoneInput").value = "";
+          areaInput.value = "";
+          totalResult.textContent = "Jami narx: -";
+        } else {
+          alert("❌ Xatolik yuz berdi. Qayta urinib ko‘ring.");
+        }
+      });
+    }
+
     areaInput.addEventListener("input", updateTotal);
     renderOptions(types, typeList, "type");
   </script>
-
 </body>
 </html>
