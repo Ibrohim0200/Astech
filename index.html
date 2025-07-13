@@ -18,8 +18,20 @@
       margin-bottom: 30px;
     }
 
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 50px;
+      height: auto;
+    }
+
     header h1 {
-      font-size: 28px;
+      font-size: 24px;
       color: #007bff;
       margin: 0;
     }
@@ -30,17 +42,15 @@
     }
 
     .grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 15px;
-      justify-content: center;
     }
 
     .card {
       border: 2px solid #ccc;
       border-radius: 12px;
       padding: 12px;
-      width: 150px;
       text-align: center;
       background: white;
       cursor: pointer;
@@ -65,12 +75,12 @@
       margin-bottom: 5px;
     }
 
-    .card div.name {
+    .card .name {
       font-weight: bold;
       margin-bottom: 4px;
     }
 
-    .card div.price {
+    .card .price {
       font-size: 14px;
       color: #555;
     }
@@ -135,7 +145,10 @@
 <body>
 
   <header>
-    <h1>Astech Grilyato Tanlash</h1>
+    <div class="header-content">
+      <img src="https://astech.uz/thumb/2/xVW_N4JX4i-B8pU_6aysfw/153c/d/logo_05_01_c.png" alt="Astech Logo" class="logo" />
+      <h1>Astech Grilyato Tanlash</h1>
+    </div>
   </header>
 
   <h2>1️⃣ Grilyato turini tanlang</h2>
@@ -148,7 +161,7 @@
 
   <div id="calcSection" class="hidden">
     <h2>3️⃣ Maydonni kiriting (m²)</h2>
-    <input type="number" id="areaInput" placeholder="Masalan: 12" min="1" />
+    <input type="number" id="areaInput" placeholder="m²" min="1" />
     <div class="result" id="totalResult">Jami narx: -</div>
   </div>
 
