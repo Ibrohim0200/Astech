@@ -278,7 +278,7 @@
 
       let isSpam = false;
       try {
-        const spamRes = await fetch("/api/spam-check", {
+        const spamRes = await fetch("Server http://localhost:3000/api/spam-check", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message })
@@ -295,7 +295,7 @@
         message = `🚨 *Ehtimoliy SPAM!* 🚨\n\n` + message;
       }
 
-      fetch('https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage', {
+      fetch('https://api.telegram.org/bot7789052663:AAF4aWbPspPGy1abAnqkj59Icyw_w-6Dooc/sendMessage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
