@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grilyato Tanlash - Astech</title>
+  <title>Grilyato - Astech</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -12,41 +12,34 @@
       max-width: 700px;
       margin: auto;
     }
-
     header {
       text-align: center;
       margin-bottom: 30px;
     }
-
     .header-content {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
     }
-
     .logo {
       width: 50px;
       height: auto;
     }
-
     header h1 {
       font-size: 24px;
       color: #007bff;
       margin: 0;
     }
-
     h2 {
       margin-top: 40px;
       color: #222;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 15px;
     }
-
     .card {
       border: 2px solid #ccc;
       border-radius: 12px;
@@ -57,34 +50,28 @@
       transition: all 0.2s ease-in-out;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-
     .card:hover {
       transform: scale(1.04);
       border-color: #007bff;
     }
-
     .card.selected {
       border-color: #007bff;
       background: #e8f2ff;
     }
-
     .card img {
       max-width: 100%;
       height: 80px;
       object-fit: contain;
       margin-bottom: 5px;
     }
-
     .card .name {
       font-weight: bold;
       margin-bottom: 4px;
     }
-
     .card .price {
       font-size: 14px;
       color: #555;
     }
-
     input[type="number"],
     input[type="text"],
     input[type="tel"] {
@@ -95,7 +82,6 @@
       border: 2px solid #ccc;
       border-radius: 10px;
     }
-
     button {
       margin-top: 15px;
       padding: 12px 20px;
@@ -106,22 +92,18 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     .result {
       font-size: 20px;
       margin-top: 20px;
       font-weight: bold;
       color: #007bff;
     }
-
     .hidden {
       display: none;
     }
-
     #thankYouMessage {
       margin-top: 20px;
       padding: 20px;
@@ -131,7 +113,6 @@
       font-weight: bold;
       text-align: center;
     }
-
     footer {
       margin-top: 50px;
       text-align: center;
@@ -143,11 +124,10 @@
   </style>
 </head>
 <body>
-
   <header>
     <div class="header-content">
       <img src="https://astech.uz/thumb/2/xVW_N4JX4i-B8pU_6aysfw/153c/d/logo_05_01_c.png" alt="Astech Logo" class="logo" />
-      <h1>Astech Grilyato Tanlash</h1>
+      <h1>Astech Grilyato</h1>
     </div>
   </header>
 
@@ -249,12 +229,10 @@
         totalResult.textContent = "⬆️ Tur va rangni tanlang.";
         return;
       }
-
       if (isNaN(area) || area <= 0) {
         totalResult.textContent = "⚠️ To‘g‘ri maydon kiriting.";
         return;
       }
-
       const total = selectedType.price * area;
       totalResult.textContent = `🧾 ${selectedType.name} (${selectedColor.name}) — ${total.toLocaleString()} so‘m`;
     }
@@ -262,12 +240,10 @@
     function getLocation() {
       const name = document.getElementById("nameInput").value.trim();
       const phone = document.getElementById("phoneInput").value.trim();
-
       if (!name || !phone) {
         alert("Iltimos, ismingiz va telefon raqamingizni kiriting.");
         return;
       }
-
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           userLocation = position.coords;
@@ -281,19 +257,16 @@
       }
     }
 
-    function sendOrder() {
+    async function sendOrder() {
       const name = document.getElementById("nameInput").value.trim();
       const phone = document.getElementById("phoneInput").value.trim();
       const area = parseFloat(areaInput.value);
-
       if (!selectedType || !selectedColor || !area || !userLocation || !name || !phone) {
         alert("Iltimos, barcha maydonlarni to‘ldiring va lokatsiyani yuboring.");
         return;
       }
-
       const total = selectedType.price * area;
-
-      const message = `
+      let message = `
 📦 Yangi buyurtma!
 👤 Ism: ${name}
 📞 Telefon: ${phone}
@@ -301,15 +274,34 @@
 🎨 Rang: ${selectedColor.name}
 📐 Maydon: ${area} m²
 💰 Jami: ${total.toLocaleString()} so‘m
-📍 Lokatsiya: https://www.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}
-      `.trim();
+📍 Lokatsiya: https://www.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}`;
 
-      fetch('https://api.telegram.org/bot7789052663:AAF4aWbPspPGy1abAnqkj59Icyw_w-6Dooc/sendMessage', {
+      let isSpam = false;
+      try {
+        const spamRes = await fetch("/api/spam-check", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+        const spamData = await spamRes.json();
+        if (spamData.ok && spamData.spam) {
+          isSpam = true;
+        }
+      } catch (err) {
+        console.warn("Spam tekshiruvida xatolik:", err);
+      }
+
+      if (isSpam) {
+        message = `🚨 *Ehtimoliy SPAM!* 🚨\n\n` + message;
+      }
+
+      fetch('https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           chat_id: "-1002885421730",
-          text: message
+          text: message,
+          parse_mode: "Markdown"
         })
       })
       .then(res => res.json())
