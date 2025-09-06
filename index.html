@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RENTAL - Rent a Car</title>
+  <title>RENTAL24 - Rent a Car</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f5f6fa; color: #333; }
@@ -29,7 +29,7 @@
     .car-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
     .car-card h3 { margin: 10px 0 5px; font-size: 20px; }
     .price { font-size: 18px; font-weight: bold; color: #ff6600; margin: 5px 0 15px; }
-    .btn { padding: 10px 15px; background: #ff6600; color: #fff; border-radius: 12px; text-decoration: none; font-weight: 600; cursor: pointer; }
+    .btn { padding: 10px 15px; background: #ff6600; color: #fff; border-radius: 12px; text-decoration: none; font-weight: 600; cursor: pointer; display: inline-block; }
     .btn:hover { background: #e05500; }
 
     /* Modal */
@@ -67,7 +67,7 @@
 <body>
   <header>
     <h1>
-    <span class="rental">RENTAL</span><span class="twenty">24</span>
+      <span class="rental">RENTAL</span><span class="twenty">24</span>
     </h1>
   </header>
 
@@ -75,7 +75,7 @@
     <a href="#" class="active">Avtopark</a>
   </nav>
 
-<section class="cars">
+  <section class="cars">
     <!-- Mashina 1 -->
     <div class="car-card">
       <img src="image/BYD.jpg" alt="BYD Song Plus">
@@ -149,7 +149,6 @@
         return;
       }
 
-      // Telegram WebApp orqali backendga yuborish
       let order = {
         car: selectedCar,
         name: name,
@@ -158,15 +157,13 @@
       };
 
       if (window.Telegram && window.Telegram.WebApp) {
-          Telegram.WebApp.sendData(JSON.stringify(order));
-          alert("✅ Telegram.WebApp.sendData chaqirildi!");
+        Telegram.WebApp.sendData(JSON.stringify(order));
+        alert("✅ Buyurtma yuborildi!");
       } else {
-          alert("❌ Telegram WebApp topilmadi!");
+        alert("❌ Telegram WebApp topilmadi!");
       }
       document.getElementById("orderModal").style.display = "none";
     }
   </script>
 </body>
 </html>
-
-
