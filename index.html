@@ -157,12 +157,14 @@
       };
 
       if (window.Telegram && window.Telegram.WebApp) {
-        Telegram.WebApp.sendData(JSON.stringify(order));
+          Telegram.WebApp.sendData(JSON.stringify(order));
+          alert("✅ Telegram.WebApp.sendData chaqirildi!");
+      } else {
+          alert("❌ Telegram WebApp topilmadi!");
       }
-
-      alert("Buyurtma yuborildi ✅");
       document.getElementById("orderModal").style.display = "none";
     }
   </script>
 </body>
 </html>
+
