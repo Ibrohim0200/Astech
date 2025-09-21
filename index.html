@@ -293,59 +293,57 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-  let selectedCar = "";
-  let selectedPrice = "";
+let selectedCar = "";
+let selectedPrice = "";
 
-  function openModal(car) {
+function openModal(car) {
     selectedCar = car;
     let carElement = Array.from(document.querySelectorAll(".car-card"))
-      .find(c => c.querySelector("h3").innerText === car);
-    if (carElement) {
-      selectedPrice = carElement.querySelector(".price").innerText;
-    }
+        .find(c => c.querySelector("h3").innerText === car);
+    if (carElement) selectedPrice = carElement.querySelector(".price").innerText;
     document.getElementById("carName").innerText = "Mashina: " + car;
     document.getElementById("orderModal").style.display = "flex";
-  }
+}
 
 function submitOrder() {
-  let name = document.getElementById("name").value.trim();
-  let phone = document.getElementById("phone").value.trim();
-  let dateFrom = document.getElementById("start_date").value;
-  let dateTo = document.getElementById("end_date").value;
-  let passportFile = document.getElementById("passport").files[0];
+    let name = document.getElementById("name").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let dateFrom = document.getElementById("start_date").value;
+    let dateTo = document.getElementById("end_date").value;
+    let passportFile = document.getElementById("passport").files[0];
 
-  if (!name || !phone || !dateFrom || !dateTo || !passportFile) {
-    alert("⚠️ Barcha maydonlarni to‘ldiring!");
-    return;
-  }
+    if (!name || !phone || !dateFrom || !dateTo || !passportFile) {
+        alert("⚠️ Barcha maydonlarni to‘ldiring!");
+        return;
+    }
 
-  let reader = new FileReader();
-  reader.onload = function() {
-    let order = {
-      car: selectedCar,
-      price: selectedPrice,
-      name: name,
-      phone: phone,
-      date_from: dateFrom,
-      date_to: dateTo,
-      passport: reader.result
+    let reader = new FileReader();
+    reader.onload = function() {
+        let order = {
+            car: selectedCar,
+            price: selectedPrice,
+            name: name,
+            phone: phone,
+            date_from: dateFrom,
+            date_to: dateTo,
+            passport: reader.result
+        };
+
+        if (window.Telegram && window.Telegram.WebApp) {
+            try {
+                Telegram.WebApp.sendData(JSON.stringify(order)); // Telegram botga yuboradi
+                Telegram.WebApp.close();
+            } catch (e) {
+                alert("❌ sendData ishlamadi, xato bor!");
+                console.error(e);
+            }
+        } else {
+            alert("❌ Telegram WebApp topilmadi! Faqat botdan oching.");
+        }
+
+        document.getElementById("orderModal").style.display = "none";
     };
-
-    fetch("http://127.0.0.1:5000/order", {  // Flask server manzili
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(order)
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.ok) alert("✅ Buyurtma yuborildi!");
-      else alert("❌ Xatolik: " + data.error);
-    })
-    .catch(err => alert("❌ Serverga ulanishda xatolik: " + err));
-
-    document.getElementById("orderModal").style.display = "none";
-  };
-  reader.readAsDataURL(passportFile);
+    reader.readAsDataURL(passportFile);
 }
 
   function closeModal() {
@@ -356,3 +354,4 @@ function submitOrder() {
 
 </body>
 </html>
+
