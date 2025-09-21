@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RENTAL24 - Rent a Car</title>
+  <!-- ❌ Xatolik: avval 2 marta ulab qo‘yilgandi -->
+  <!-- ✅ To‘g‘ri: faqat 1 marta chaqirish kerak -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f5f6fa; color: #333; }
@@ -15,7 +17,6 @@
     nav a { text-decoration: none; color: #333; }
     nav a.active { color: #ff6600; border-bottom: 2px solid #ff6600; padding-bottom: 3px; }
 
-    /* Grid: 1 qatorda 2 ta card */
     .cars {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -23,7 +24,6 @@
       padding: 15px;
     }
 
-    /* Car card */
     .car-card {
       background: white;
       border-radius: 15px;
@@ -39,7 +39,6 @@
     .btn { padding: 8px 12px; background: #ff6600; color: #fff; border-radius: 10px; text-decoration: none; font-weight: 600; cursor: pointer; display: inline-block; font-size: 14px; }
     .btn:hover { background: #e05500; }
 
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -56,6 +55,7 @@
       border-radius: 15px;
       width: 90%;
       max-width: 400px;
+      position: relative; /* ✅ Close tugmasi joylashishi uchun */
     }
     .modal-content h2 { margin-top: 0; text-align: center; }
     .form-group { margin-bottom: 12px; }
@@ -75,10 +75,6 @@
     .close-btn:hover {
       color: red;
     }
-    .modal-content {
-      position: relative;
-    }
-
     .modal button {
       width: 100%; padding: 12px;
       background: #ff6600; border: none; border-radius: 10px;
@@ -98,166 +94,167 @@
     <a href="#" class="active">Avtopark</a>
   </nav>
 
+  <!-- Mashinalar sectioni (sizning kodiz o‘sha-o‘sha) -->
   <section class="cars">
-    <!-- Mashina 1 -->
-    <div class="car-card">
-      <img src="image/BYD.jpg" alt="BYD Chempion">
-      <h3>BYD Chempion</h3>
-      <p class="price">1 300 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('BYD Chempion')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 1 -->
+      <div class="car-card">
+        <img src="image/BYD.jpg" alt="BYD Chempion">
+        <h3>BYD Chempion</h3>
+        <p class="price">1 300 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('BYD Chempion')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 2 -->
-    <div class="car-card">
-      <img src="image/Trailblazer.jpg" alt="Trailblazer">
-      <h3>Trailblazer</h3>
-      <p class="price">1 200 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Trailblazer')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 2 -->
+      <div class="car-card">
+        <img src="image/Trailblazer.jpg" alt="Trailblazer">
+        <h3>Trailblazer</h3>
+        <p class="price">1 200 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Trailblazer')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 3 -->
-    <div class="car-card">
-      <img src="image/Gentra.jpg" alt="Chevrolet Gentra">
-      <h3>Chevrolet Gentra</h3>
-      <p class="price">550 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Gentra')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 3 -->
+      <div class="car-card">
+        <img src="image/Gentra.jpg" alt="Chevrolet Gentra">
+        <h3>Chevrolet Gentra</h3>
+        <p class="price">550 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Gentra')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 4 -->
-    <div class="car-card">
-      <img src="image/Cobalt.jpg" alt="Chevrolet Cobalt">
-      <h3>Chevrolet Cobalt</h3>
-      <p class="price">450 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Cobalt')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 4 -->
+      <div class="car-card">
+        <img src="image/Cobalt.jpg" alt="Chevrolet Cobalt">
+        <h3>Chevrolet Cobalt</h3>
+        <p class="price">450 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Cobalt')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 5 -->
-    <div class="car-card">
-      <img src="image/Captiva.jpg" alt="Chevrolet Captiva 3">
-      <h3>Chevrolet Captiva 3</h3>
-      <p class="price">800 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Captiva 3')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 5 -->
+      <div class="car-card">
+        <img src="image/Captiva.jpg" alt="Chevrolet Captiva 3">
+        <h3>Chevrolet Captiva 3</h3>
+        <p class="price">800 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Captiva 3')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 6 -->
-    <div class="car-card">
-      <img src="image/Spark.jpg" alt="Chevrolet Spark">
-      <h3>Chevrolet Spark</h3>
-      <p class="price">350 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Spark')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 6 -->
+      <div class="car-card">
+        <img src="image/Spark.jpg" alt="Chevrolet Spark">
+        <h3>Chevrolet Spark</h3>
+        <p class="price">350 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Spark')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 7 -->
-    <div class="car-card">
-      <img src="image/Malibu.jpg" alt="Chevrolet Malibu 2">
-      <h3>Chevrolet Malibu 2</h3>
-      <p class="price">1 300 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Malibu 2')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 7 -->
+      <div class="car-card">
+        <img src="image/Malibu.jpg" alt="Chevrolet Malibu 2">
+        <h3>Chevrolet Malibu 2</h3>
+        <p class="price">1 300 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Malibu 2')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 8 -->
-    <div class="car-card">
-      <img src="image/Monza.jpg" alt="Chevrolet Monza">
-      <h3>Chevrolet Monza</h3>
-      <p class="price">700 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Monza')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 8 -->
+      <div class="car-card">
+        <img src="image/Monza.jpg" alt="Chevrolet Monza">
+        <h3>Chevrolet Monza</h3>
+        <p class="price">700 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Monza')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 9 -->
-    <div class="car-card">
-      <img src="image/Nexia.jpg" alt="Chevrolet Nexia 3">
-      <h3>Chevrolet Nexia 3</h3>
-      <p class="price">400 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Nexia 3')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 9 -->
+      <div class="car-card">
+        <img src="image/Nexia.jpg" alt="Chevrolet Nexia 3">
+        <h3>Chevrolet Nexia 3</h3>
+        <p class="price">400 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Nexia 3')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 10 -->
-    <div class="car-card">
-      <img src="image/Onix.jpg" alt="Chevrolet Onix">
-      <h3>Chevrolet Onix</h3>
-      <p class="price">700 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Onix')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 10 -->
+      <div class="car-card">
+        <img src="image/Onix.jpg" alt="Chevrolet Onix">
+        <h3>Chevrolet Onix</h3>
+        <p class="price">700 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Onix')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 11 -->
-    <div class="car-card">
-      <img src="image/Tracker.jpg" alt="Chevrolet Tracker 2">
-      <h3>Chevrolet Tracker 2</h3>
-      <p class="price">800 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Tracker 2')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 11 -->
+      <div class="car-card">
+        <img src="image/Tracker.jpg" alt="Chevrolet Tracker 2">
+        <h3>Chevrolet Tracker 2</h3>
+        <p class="price">800 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Tracker 2')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 12 -->
-    <div class="car-card">
-      <img src="image/Equinox.jpg" alt="Chevrolet Equinox">
-      <h3>Chevrolet Equinox</h3>
-      <p class="price">1 200 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Equinox')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 12 -->
+      <div class="car-card">
+        <img src="image/Equinox.jpg" alt="Chevrolet Equinox">
+        <h3>Chevrolet Equinox</h3>
+        <p class="price">1 200 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Equinox')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 13 -->
-    <div class="car-card">
-      <img src="image/Chazor.jpg" alt="BYD Chazor">
-      <h3>BYD Chazor</h3>
-      <p class="price">1 200 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('BYD Chazor')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 13 -->
+      <div class="car-card">
+        <img src="image/Chazor.jpg" alt="BYD Chazor">
+        <h3>BYD Chazor</h3>
+        <p class="price">1 200 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('BYD Chazor')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 14 -->
-    <div class="car-card">
-      <img src="image/Damas.jpg" alt="Chevrolet Damas">
-      <h3>Chevrolet Damas</h3>
-      <p class="price">450 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Damas')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 14 -->
+      <div class="car-card">
+        <img src="image/Damas.jpg" alt="Chevrolet Damas">
+        <h3>Chevrolet Damas</h3>
+        <p class="price">450 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Damas')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 15 -->
-    <div class="car-card">
-      <img src="image/Cherry.jpg" alt="Cherry Tiggo 7 Pro">
-      <h3>Cherry Tiggo 7 Pro</h3>
-      <p class="price">900 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Cherry Tiggo 7 Pro')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 15 -->
+      <div class="car-card">
+        <img src="image/Cherry.jpg" alt="Cherry Tiggo 7 Pro">
+        <h3>Cherry Tiggo 7 Pro</h3>
+        <p class="price">900 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Cherry Tiggo 7 Pro')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 16 -->
-    <div class="car-card">
-      <img src="image/E2.jpg" alt="BYD E 2">
-      <h3>BYD E 2</h3>
-      <p class="price">1 000 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('BYD E 2')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 16 -->
+      <div class="car-card">
+        <img src="image/E2.jpg" alt="BYD E 2">
+        <h3>BYD E 2</h3>
+        <p class="price">1 000 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('BYD E 2')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 17 -->
-    <div class="car-card">
-      <img src="image/Uan up.jpg" alt="BYD Yuan Up">
-      <h3>BYD Yuan Up</h3>
-      <p class="price">1 000 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('BYD Yuan Up')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 17 -->
+      <div class="car-card">
+        <img src="image/Uan up.jpg" alt="BYD Yuan Up">
+        <h3>BYD Yuan Up</h3>
+        <p class="price">1 000 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('BYD Yuan Up')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 18 -->
-    <div class="car-card">
-      <img src="image/Song.jpg" alt="BYD Song Plus">
-      <h3>BYD Song Plus</h3>
-      <p class="price">1 200 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('BYD Song Plus')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 18 -->
+      <div class="car-card">
+        <img src="image/Song.jpg" alt="BYD Song Plus">
+        <h3>BYD Song Plus</h3>
+        <p class="price">1 200 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('BYD Song Plus')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 19 -->
-    <div class="car-card">
-      <img src="image/Orlando.jpg" alt="Chevrolet Orlando">
-      <h3>Chevrolet Orlando</h3>
-      <p class="price">800 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Orlando')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 19 -->
+      <div class="car-card">
+        <img src="image/Orlando.jpg" alt="Chevrolet Orlando">
+        <h3>Chevrolet Orlando</h3>
+        <p class="price">800 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Orlando')">Buyurtma berish</div>
+      </div>
 
-    <!-- Mashina 20 -->
-    <div class="car-card">
-      <img src="image/Traverse.jpg" alt="Chevrolet Traverse">
-      <h3>Chevrolet Traverse</h3>
-      <p class="price">2 000 000 so'm / kun</p>
-      <div class="btn" onclick="openModal('Chevrolet Traverse')">Buyurtma berish</div>
-    </div>
+      <!-- Mashina 20 -->
+      <div class="car-card">
+        <img src="image/Traverse.jpg" alt="Chevrolet Traverse">
+        <h3>Chevrolet Traverse</h3>
+        <p class="price">2 000 000 so'm / kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Traverse')">Buyurtma berish</div>
+      </div>
 
   </section>
 
@@ -291,10 +288,17 @@
     </div>
   </div>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
 let selectedCar = "";
 let selectedPrice = "";
+
+/* ✅ Telegram WebApp ni tayyorlash */
+if (window.Telegram && window.Telegram.WebApp) {
+    Telegram.WebApp.ready(); // WebApp tayyor bo‘lishini bildiradi
+    console.log("✅ Telegram WebApp tayyor!");
+} else {
+    console.warn("⚠️ Telegram WebApp topilmadi. Faqat bot orqali ishlaydi.");
+}
 
 function openModal(car) {
     selectedCar = car;
@@ -331,11 +335,11 @@ function submitOrder() {
 
         if (window.Telegram && window.Telegram.WebApp) {
             try {
-                Telegram.WebApp.sendData(JSON.stringify(order)); // Telegram botga yuboradi
+                Telegram.WebApp.sendData(JSON.stringify(order)); // ✅ Botga yuboriladi
                 Telegram.WebApp.close();
             } catch (e) {
                 alert("❌ sendData ishlamadi, xato bor!");
-                console.error(e);
+                console.error("sendData error:", e); // ✅ Xatoni konsolda ko‘ramiz
             }
         } else {
             alert("❌ Telegram WebApp topilmadi! Faqat botdan oching.");
@@ -346,12 +350,9 @@ function submitOrder() {
     reader.readAsDataURL(passportFile);
 }
 
-  function closeModal() {
+function closeModal() {
     document.getElementById("orderModal").style.display = "none";
-  }
+}
 </script>
-
-
 </body>
 </html>
-
