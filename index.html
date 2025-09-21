@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RENTAL24 - Rent a Car</title>
-  <!-- ❌ Xatolik: avval 2 marta ulab qo‘yilgandi -->
-  <!-- ✅ To‘g‘ri: faqat 1 marta chaqirish kerak -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f5f6fa; color: #333; }
@@ -55,7 +53,7 @@
       border-radius: 15px;
       width: 90%;
       max-width: 400px;
-      position: relative; /* ✅ Close tugmasi joylashishi uchun */
+      position: relative;
     }
     .modal-content h2 { margin-top: 0; text-align: center; }
     .form-group { margin-bottom: 12px; }
@@ -85,16 +83,13 @@
 </head>
 <body>
   <header>
-    <h1>
-      <span class="rental">RENTAL</span><span class="twenty">24</span>
-    </h1>
+    <h1><span class="rental">RENTAL</span><span class="twenty">24</span></h1>
   </header>
 
   <nav>
     <a href="#" class="active">Avtopark</a>
   </nav>
 
-  <!-- Mashinalar sectioni (sizning kodiz o‘sha-o‘sha) -->
   <section class="cars">
       <!-- Mashina 1 -->
       <div class="car-card">
@@ -257,7 +252,6 @@
       </div>
 
   </section>
-
   <!-- Modal -->
   <div class="modal" id="orderModal">
     <div class="modal-content">
@@ -280,10 +274,6 @@
         <label>Ijara tugash sanasi:</label>
         <input type="date" id="end_date" required>
       </div>
-      <div class="form-group">
-        <label>Pasport rasmi:</label>
-        <input type="file" id="passport" accept="image/*" capture="environment">
-      </div>
       <button onclick="submitOrder()">Tasdiqlash</button>
     </div>
   </div>
@@ -292,12 +282,9 @@
 let selectedCar = "";
 let selectedPrice = "";
 
-/* ✅ Telegram WebApp ni tayyorlash */
 if (window.Telegram && window.Telegram.WebApp) {
-    Telegram.WebApp.ready(); // WebApp tayyor bo‘lishini bildiradi
+    Telegram.WebApp.ready();
     console.log("✅ Telegram WebApp tayyor!");
-} else {
-    console.warn("⚠️ Telegram WebApp topilmadi. Faqat bot orqali ishlaydi.");
 }
 
 function openModal(car) {
@@ -314,40 +301,34 @@ function submitOrder() {
     let phone = document.getElementById("phone").value.trim();
     let dateFrom = document.getElementById("start_date").value;
     let dateTo = document.getElementById("end_date").value;
-    let passportFile = document.getElementById("passport").files[0];
 
-    if (!name || !phone || !dateFrom || !dateTo || !passportFile) {
+    if (!name || !phone || !dateFrom || !dateTo) {
         alert("⚠️ Barcha maydonlarni to‘ldiring!");
         return;
     }
 
-    let reader = new FileReader();
-    reader.onload = function() {
-        let order = {
-            car: selectedCar,
-            price: selectedPrice,
-            name: name,
-            phone: phone,
-            date_from: dateFrom,
-            date_to: dateTo,
-            passport: reader.result
-        };
-
-        if (window.Telegram && window.Telegram.WebApp) {
-            try {
-                Telegram.WebApp.sendData(JSON.stringify(order)); // ✅ Botga yuboriladi
-                Telegram.WebApp.close();
-            } catch (e) {
-                alert("❌ sendData ishlamadi, xato bor!");
-                console.error("sendData error:", e); // ✅ Xatoni konsolda ko‘ramiz
-            }
-        } else {
-            alert("❌ Telegram WebApp topilmadi! Faqat botdan oching.");
-        }
-
-        document.getElementById("orderModal").style.display = "none";
+    let order = {
+        car: selectedCar,
+        price: selectedPrice,
+        name: name,
+        phone: phone,
+        date_from: dateFrom,
+        date_to: dateTo
     };
-    reader.readAsDataURL(passportFile);
+
+    if (window.Telegram && window.Telegram.WebApp) {
+        try {
+            Telegram.WebApp.sendData(JSON.stringify(order));
+            Telegram.WebApp.close();
+        } catch (e) {
+            alert("❌ sendData ishlamadi!");
+            console.error("sendData error:", e);
+        }
+    } else {
+        alert("❌ Telegram WebApp topilmadi!");
+    }
+
+    document.getElementById("orderModal").style.display = "none";
 }
 
 function closeModal() {
