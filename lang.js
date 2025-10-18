@@ -23,7 +23,7 @@ function applyTranslations(texts) {
   document.querySelectorAll(".car-card").forEach(card => {
     const priceElement = card.querySelector(".price");
     if (priceElement) {
-      const priceText = priceElement.innerText.split(" ")[0];
+      const priceText = priceElement.innerText.replace(/[^0-9\s]/g, '').trim(); 
       priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
     }
     const btn = card.querySelector(".btn");
@@ -59,3 +59,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
