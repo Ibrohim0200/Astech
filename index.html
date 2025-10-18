@@ -252,7 +252,7 @@
       </div>
 
   </section>
-  <!-- Modal -->
+ <!-- Modal -->
   <div class="modal" id="orderModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -282,16 +282,71 @@
 let selectedCar = "";
 let selectedPrice = "";
 
+// Telegram tayyorlash
 if (window.Telegram && window.Telegram.WebApp) {
     Telegram.WebApp.ready();
     console.log("✅ Telegram WebApp tayyor!");
 }
 
+// Tilni olish URLdan
+function getLangFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("lang") || localStorage.getItem("lang") || "uz";
+}
+
+// Tilni yuklash va HTML ga qo‘llash
+async function loadLanguage(lang) {
+    try {
+        const response = await fetch(`locales/${lang}.json`);
+        if (!response.ok) throw new Error("Language file not found");
+        const texts = await response.json();
+        applyTranslations(texts);
+        localStorage.setItem("lang", lang);
+        document.documentElement.lang = lang;
+    } catch (err) {
+        console.error("❌ Tilni yuklashda xatolik:", err);
+    }
+}
+
+// Matnlarni sahifaga qo‘llash
+function applyTranslations(texts) {
+    document.querySelector("nav a.active").textContent = texts.navbar.autopark;
+
+    document.querySelectorAll(".car-card").forEach(card => {
+        const priceElement = card.querySelector(".price");
+        if(priceElement) {
+            const priceText = priceElement.innerText.split(" ")[0];
+            priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
+        }
+        const btn = card.querySelector(".btn");
+        if(btn) btn.innerText = texts.cars.order_button;
+    });
+
+    const labels = document.querySelectorAll(".form-group label");
+    if(labels.length >= 4){
+        labels[0].innerText = texts.modal.name_label;
+        labels[1].innerText = texts.modal.phone_label;
+        labels[2].innerText = texts.modal.start_date_label;
+        labels[3].innerText = texts.modal.end_date_label;
+    }
+
+    document.querySelector("#orderModal h2").innerText = texts.modal.title;
+    document.querySelector("#orderModal button").innerText = texts.modal.confirm_button;
+    window.ALERTS = texts.alerts;
+    console.log(texts.console.ready);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = getLangFromUrl();
+    loadLanguage(lang);
+});
+
+// Modal va buyurtma funksiyalari
 function openModal(car) {
     selectedCar = car;
     let carElement = Array.from(document.querySelectorAll(".car-card"))
         .find(c => c.querySelector("h3").innerText === car);
-    if (carElement) selectedPrice = carElement.querySelector(".price").innerText;
+    if(carElement) selectedPrice = carElement.querySelector(".price").innerText;
     document.getElementById("carName").innerText = "Mashina: " + car;
     document.getElementById("orderModal").style.display = "flex";
 }
@@ -302,38 +357,26 @@ function submitOrder() {
     let dateFrom = document.getElementById("start_date").value;
     let dateTo = document.getElementById("end_date").value;
 
-    if (!name || !phone || !dateFrom || !dateTo) {
-        alert("⚠️ Barcha maydonlarni to‘ldiring!");
+    if(!name || !phone || !dateFrom || !dateTo){
+        if(window.ALERTS && window.ALERTS.fill_fields) alert(window.ALERTS.fill_fields);
+        else alert("⚠️ Barcha maydonlarni to‘ldiring!");
         return;
     }
 
-    let order = {
-        car: selectedCar,
-        price: selectedPrice,
-        name: name,
-        phone: phone,
-        date_from: dateFrom,
-        date_to: dateTo
-    };
+    let order = { car:selectedCar, price:selectedPrice, name, phone, date_from:dateFrom, date_to:dateTo };
 
-    if (window.Telegram && window.Telegram.WebApp) {
-        try {
-            Telegram.WebApp.sendData(JSON.stringify(order));
-            Telegram.WebApp.close();
-        } catch (e) {
-            alert("❌ sendData ishlamadi!");
-            console.error("sendData error:", e);
-        }
-    } else {
-        alert("❌ Telegram WebApp topilmadi!");
-    }
+    if(window.Telegram && window.Telegram.WebApp){
+        try{ Telegram.WebApp.sendData(JSON.stringify(order)); Telegram.WebApp.close(); }
+        catch(e){ if(window.ALERTS && window.ALERTS.send_error) alert(window.ALERTS.send_error); else alert("❌ sendData ishlamadi!"); console.error(e);}
+    } else { if(window.ALERTS && window.ALERTS.no_webapp) alert(window.ALERTS.no_webapp); else alert("❌ Telegram WebApp topilmadi!"); }
 
     document.getElementById("orderModal").style.display = "none";
 }
 
-function closeModal() {
+function closeModal(){
     document.getElementById("orderModal").style.display = "none";
 }
 </script>
 </body>
 </html>
+
