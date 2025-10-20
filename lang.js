@@ -16,22 +16,18 @@ async function loadLanguage(lang) {
 }
 
 function applyTranslations(texts) {
-  // Navbar
   document.querySelector("nav a.active").textContent = texts.navbar.autopark;
 
-  // Car cards
   document.querySelectorAll(".car-card").forEach(card => {
     const priceElement = card.querySelector(".price");
     if (priceElement) {
-      const priceText = priceElement.innerText.replace(/[^0-9\s]/g, '').trim(); 
+      const priceText = priceElement.innerText.replace(/[^0-9\s]/g, '').trim();
       priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
     }
     const btn = card.querySelector(".btn");
     if (btn) btn.innerText = texts.cars.order_button;
   });
 
-  // Modal
-  document.querySelector("#orderModal h2").innerText = texts.modal.title;
   const labels = document.querySelectorAll(".form-group label");
   if (labels.length >= 4) {
     labels[0].innerText = texts.modal.name_label;
@@ -39,11 +35,11 @@ function applyTranslations(texts) {
     labels[2].innerText = texts.modal.start_date_label;
     labels[3].innerText = texts.modal.end_date_label;
   }
+
+  document.querySelector("#orderModal h2").innerText = texts.modal.title;
   document.querySelector("#orderModal button").innerText = texts.modal.confirm_button;
 
-  // Alertlar globalga qo‘yiladi
   window.ALERTS = texts.alerts;
-
   console.log(texts.console.ready);
 }
 
@@ -59,4 +55,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
 
