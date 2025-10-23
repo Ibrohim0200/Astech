@@ -21,15 +21,20 @@ function applyTranslations(texts) {
   document.querySelectorAll(".car-card").forEach(card => {
     const priceElement = card.querySelector(".price");
     if (priceElement) {
-      let priceText = priceElement.innerText.trim();
+      // 1️⃣ data-price dan sonni olamiz
+      const priceValue = priceElement.getAttribute("data-price");
+      if (priceValue) {
+        // 2️⃣ Raqamni 3 lik formatda yozamiz (masalan: 1 200 000)
+        const formatted = Number(priceValue).toLocaleString('uz-UZ');
 
-      // Faqat raqam va bo‘shliqlarni ajratamiz (ya’ni 1 300 000 qismi)
-      const match = priceText.match(/[\d\s]+/);
-      if (match) {
-        const numberPart = match[0].trim();
-        priceElement.innerText = `${numberPart} ${texts.cars.price_suffix}`;
+        // 3️⃣ Eski matnning oxiridagi so‘zlarni (so'm/kun) olib tashlab, yangi suffix qo‘shamiz
+        priceElement.innerText = `${formatted} ${texts.cars.price_suffix}`;
       } else {
-        priceElement.innerText = priceText + " " + texts.cars.price_suffix;
+        // Agar data-price bo‘lmasa, eski matndan foydalanamiz
+        const parts = priceElement.innerText.split(' ');
+        parts.pop(); // oxirgi elementni (so'm/kun) olib tashlaydi
+        const numberPart = parts.join(' ');
+        priceElement.innerText = `${numberPart} ${texts.cars.price_suffix}`;
       }
     }
 
@@ -65,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
 
 
 
