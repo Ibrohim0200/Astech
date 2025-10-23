@@ -25,7 +25,7 @@ function applyTranslations(texts) {
       const priceValue = priceElement.getAttribute("data-price");
       if (priceValue) {
         // Raqamni 3 lik formatda ajratamiz (1 300 000)
-        const formatted = Number(priceValue).toLocaleString('uz-UZ');
+        const formatted = Number(priceValue.replace(/\D/g, '')).toLocaleString('uz-UZ');
         priceElement.innerText = `${formatted} ${texts.cars.price_suffix}`;
       }
     }
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
 
 
 
