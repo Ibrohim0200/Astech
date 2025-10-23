@@ -3,7 +3,7 @@
     "autopark": "Avtopark"
   },
   "cars": {
-    "price_suffix": "so'm / kun",
+    "price_suffix": "so'm/kun",
     "order_button": "Buyurtma berish"
   },
   "modal": {
@@ -24,3 +24,4 @@
     "ready": "✅ Telegram WebApp tayyor!"
   }
 }
+
