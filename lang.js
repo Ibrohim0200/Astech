@@ -22,17 +22,14 @@ function applyTranslations(texts) {
     const priceElement = card.querySelector(".price");
     if (priceElement) {
       let priceText = priceElement.innerText.trim();
-      const lastSpaceIndex = priceText.lastIndexOf(' ');
-      if (lastSpaceIndex !== -1) {
-        // Raqamli qism (oldingi)
-        const numberPart = priceText.substring(0, lastSpaceIndex).trim();
-        // So'zli qism (so'm/kun)
-        const suffixPart = priceText.substring(lastSpaceIndex + 1).trim();
-        // Endi faqat suffixni almashtiramiz
+
+      // Faqat raqam va bo‘shliqlarni ajratamiz (ya’ni 1 300 000 qismi)
+      const match = priceText.match(/[\d\s]+/);
+      if (match) {
+        const numberPart = match[0].trim();
         priceElement.innerText = `${numberPart} ${texts.cars.price_suffix}`;
       } else {
-        // Agar bo‘shliq topilmasa, fallback
-        priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
+        priceElement.innerText = priceText + " " + texts.cars.price_suffix;
       }
     }
 
@@ -68,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
 
 
 
