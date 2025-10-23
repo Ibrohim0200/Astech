@@ -21,13 +21,20 @@ function applyTranslations(texts) {
   document.querySelectorAll(".car-card").forEach(card => {
     const priceElement = card.querySelector(".price");
     if (priceElement) {
-      const priceText = priceElement.innerText.replace(/[^0-9\s]/g, '').trim();
-      priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
+      // Asl narxni data atributdan olamiz
+      const priceValue = priceElement.getAttribute("data-price");
+      if (priceValue) {
+        // Raqamni 3 lik formatda ajratamiz (1 300 000)
+        const formatted = Number(priceValue).toLocaleString('uz-UZ');
+        priceElement.innerText = `${formatted} ${texts.cars.price_suffix}`;
+      }
     }
+
     const btn = card.querySelector(".btn");
     if (btn) btn.innerText = texts.cars.order_button;
   });
 
+  // Modal tarjimalari
   const labels = document.querySelectorAll(".form-group label");
   if (labels.length >= 4) {
     labels[0].innerText = texts.modal.name_label;
@@ -55,5 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
 
 
