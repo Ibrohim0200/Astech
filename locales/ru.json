@@ -3,7 +3,7 @@
     "autopark": "Автопарк"
   },
   "cars": {
-    "price_suffix": "сум / день",
+    "price_suffix": "сум/день",
     "order_button": "Сделать заказ"
   },
   "modal": {
@@ -24,3 +24,4 @@
     "ready": "✅ Telegram WebApp готов!"
   }
 }
+
