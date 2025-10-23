@@ -21,12 +21,18 @@ function applyTranslations(texts) {
   document.querySelectorAll(".car-card").forEach(card => {
     const priceElement = card.querySelector(".price");
     if (priceElement) {
-      // Asl narxni data atributdan olamiz
-      const priceValue = priceElement.getAttribute("data-price");
-      if (priceValue) {
-        // Raqamni 3 lik formatda ajratamiz (1 300 000)
-        const formatted = Number(priceValue.replace(/\D/g, '')).toLocaleString('uz-UZ');
-        priceElement.innerText = `${formatted} ${texts.cars.price_suffix}`;
+      let priceText = priceElement.innerText.trim();
+      const lastSpaceIndex = priceText.lastIndexOf(' ');
+      if (lastSpaceIndex !== -1) {
+        // Raqamli qism (oldingi)
+        const numberPart = priceText.substring(0, lastSpaceIndex).trim();
+        // So'zli qism (so'm/kun)
+        const suffixPart = priceText.substring(lastSpaceIndex + 1).trim();
+        // Endi faqat suffixni almashtiramiz
+        priceElement.innerText = `${numberPart} ${texts.cars.price_suffix}`;
+      } else {
+        // Agar bo‘shliq topilmasa, fallback
+        priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
       }
     }
 
@@ -62,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const lang = getLangFromUrl();
   loadLanguage(lang);
 });
+
 
 
 
